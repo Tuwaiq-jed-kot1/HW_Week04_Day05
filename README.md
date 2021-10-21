@@ -11,6 +11,7 @@ The assignment will add a further condition to the Dialog Project that we applie
 ## Part Two - Modify on Click Send
 - When the user click on send button will go to another fragment that will display all info that user enter in the register screen instead of show in the same screen.
 - To do this part you need modify:
-1. create two fragments, one associated with Register layout (copy the main_activity.xml) and other for display entered information. 
-2. 
-3. 
+
+    1. create two fragments named `MainFragment` and `InfoFragment`. `MainFragment` represent Register screen, mean all code in `MainActivity` and `activity_main.xml` will be in this fragment with it’s layout. `InfoFragment` is for display entered information. 
+    2. 
+    3. 
