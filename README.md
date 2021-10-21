@@ -13,5 +13,5 @@ The assignment will add a further condition to the Dialog Project that we applie
 - To do this part you need modify:
 
     1. create two fragments named `MainFragment` and `InfoFragment`. `MainFragment` represent Register screen, mean all code in `MainActivity` and `activity_main.xml` will be in this fragment with it’s layout. `InfoFragment` is for display entered information. 
-    2. 
-    3. 
+    2. change code in `MainActiviy` and it’s layout to can add/replace fragment. 
+    3. When click on `send button` in `MainFragment` will send all info that user entered to `InfoFragment` to display it.
