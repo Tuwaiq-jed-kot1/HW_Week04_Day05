@@ -105,18 +105,23 @@ class MainFragment : Fragment() {
         val btnSend: Button = view.findViewById(R.id.send)
 
         btnSend.setOnClickListener {
-            val info = "Phone: +${countryCode.toString()+ phone.text}\n"
-            val input = "Name: ${name.text.toString()} \n BirthDay :${date.toString()} \n Gender: ${gender.text.toString()}" +
-                    "\n ${showInfo.text.toString()} \n Phone:${countryCode.toString()+ phone.text}"
+            if (name!=null && date.isNotEmpty() && gender.text.isNotEmpty() && phone.text.isNotEmpty()){
 
-            val bandle = Bundle()//bandle هو عبارة عن حاوية لارسال البيانات
-            bandle.putString("data", input)
+                val input = "Name: ${name.text.toString()} \n BirthDay :${date.toString()} \n Gender: ${gender.text.toString()}" +
+                        "\n ${showInfo.text.toString()} \n Phone:${countryCode.toString()+ phone.text}"
 
-            val infoFragment = InfoFragment()
-            infoFragment.arguments = bandle
-            fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, infoFragment)
-                ?.commit()
+                val bandle = Bundle()//bandle هو عبارة عن حاوية لارسال البيانات
+                bandle.putString("data", input)
 
+                val infoFragment = InfoFragment()
+                infoFragment.arguments = bandle
+                fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, infoFragment)
+                    ?.commit()
+            }else{
+
+
+                Toast.makeText(context,"vbnm,",Toast.LENGTH_SHORT).show()
+            }
 
 
         }
@@ -127,6 +132,7 @@ class MainFragment : Fragment() {
         //3. Alert dialog
         clear= view.findViewById(R.id.clear)
         clear.setOnClickListener {
+
             val alert = AlertDialog.Builder(context)
             alert.setTitle("Reset")
             alert.setIcon(R.drawable.alert)
