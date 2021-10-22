@@ -105,9 +105,9 @@ class MainFragment : Fragment() {
         val btnSend: Button = view.findViewById(R.id.send)
 
         btnSend.setOnClickListener {
-            if (name!=null && date.isNotEmpty() && gender.text.isNotEmpty() && phone.text.isNotEmpty()){
+            if (name!=null && date!=null && gender.text.isNotEmpty() && phone.text.isNotEmpty()){
 
-                val input = "Name: ${name.text.toString()} \n BirthDay :${date.toString()} \n Gender: ${gender.text.toString()}" +
+                val input = "Name: ${name.text.toString()} \n BirthDay :${date} \n Gender: ${gender.text.toString()}" +
                         "\n ${showInfo.text.toString()} \n Phone:${countryCode.toString()+ phone.text}"
 
                 val bandle = Bundle()//bandle هو عبارة عن حاوية لارسال البيانات
@@ -120,7 +120,7 @@ class MainFragment : Fragment() {
             }else{
 
 
-                Toast.makeText(context,"vbnm,",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,"You must enter the data",Toast.LENGTH_SHORT).show()
             }
 
 
