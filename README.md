@@ -6,7 +6,8 @@ The assignment will add a further condition to the Dialog Project that we applie
 
 ## Part One - Modify on Register screen
 - You must add TextView in Register screen for gender where when the user click on TextView the Dialog shown and ask user to select one of two choice `male/female` and show the item selected in the same TextView.
-
+> Note : you can use the spinner for select gender instead of Dialog.
+![UI Application](part1.png)
 
 ## Part Two - Modify on Click Send
 - When the user click on send button will go to another fragment that will display all info that the user entered in the register screen instead of showing in the same screen.
