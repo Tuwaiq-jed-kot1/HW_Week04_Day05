@@ -28,18 +28,18 @@ class MainFragment : Fragment() {
 
     //
 //    //2. Country Code
-//    private lateinit var ccp: CountryCodePicker
-//    private var countryCode:String? = null
-//    private var countryName:String? = null
-//    private lateinit var showInfo : TextView
-//    private lateinit var phone: EditText
-//
-//    //3. gender
-  private lateinit var gender : TextView
-//
+    private lateinit var ccp: CountryCodePicker
+    private var countryCode:String? = null
+    private var countryName:String? = null
+    private lateinit var showInfo : TextView
+    private lateinit var phone: EditText
+
+    //3. gender
+    private lateinit var gender: TextView
+
     private lateinit var send: Button
-//    private lateinit var clear : Button
-    //private lateinit var date :String
+  private lateinit var clear : Button
+    private lateinit var date :String
 
     private lateinit var name: EditText
 
@@ -51,6 +51,35 @@ class MainFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_main, container, false)
         val name: EditText = view.findViewById(R.id.id_name)
 
+
+// 1. Date Dialog
+        pickDate =view.findViewById(R.id.pickDate)
+
+        //create object of Calendar
+        val calendar = Calendar.getInstance()
+        // add day of month
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH)
+        val year = calendar.get(Calendar.YEAR)
+        pickDate.setOnClickListener {
+            DatePickerDialog(this.requireContext(), DatePickerDialog.OnDateSetListener { _, y, m, d ->
+                date = "$d/$m/$y"
+                pickDate.setText(date)
+            }, year, month, day)
+                .show()
+        }
+
+
+
+
+        //2. Country Code
+        showInfo =view.findViewById(R.id.info)
+        phone =view.findViewById(R.id.phone)
+        ccp =view.findViewById(R.id.pickCode)
+        ccp.setOnCountryChangeListener {
+            countryCode = ccp.selectedCountryCode
+            countryName = ccp.selectedCountryName
+        }
 
         gender = view.findViewById(R.id.id_gender)
         gender.setOnClickListener {
@@ -71,51 +100,64 @@ class MainFragment : Fragment() {
                 dialog.cancel()
             }.show()
         }
-            val btnSend: Button = view.findViewById(R.id.send)
-
-            btnSend.setOnClickListener {
-
-                val input = "Name: ${name.text.toString()} \n Gender: ${gender.text.toString()}"
-
-                val bandle = Bundle()//bandle هو عبارة عن حاوية لارسال البيانات
-                bandle.putString("data", input)
-
-                val infoFragment = InfoFragment()
-                infoFragment.arguments = bandle
-                fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, infoFragment)
-                    ?.commit()
 
 
-                /*activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_container,infoFragment)
-                ?.addToBackStack("details")
-                ?.commit()//commitNow*/
+        val btnSend: Button = view.findViewById(R.id.send)
 
-                //هنا يتحقق اذا كان الجوال بالعرض يعرض البيانات في الفريم (نفس الصفحه) و اذا  كان الجوال بالطول يروح فارقمينت ثانيه
-                /*     val view = R.id.container
-                   val bandle =Bundle()
-                   val fragment = InfoFragment.newInstance()
+        btnSend.setOnClickListener {
+            val info = "Phone: +${countryCode.toString()+ phone.text}\n"
+            val input = "Name: ${name.text.toString()} \n BirthDay :${date.toString()} \n Gender: ${gender.text.toString()}" +
+                    "\n ${showInfo.text.toString()} \n Phone:${countryCode.toString()+ phone.text}"
 
-                   fragment.arguments  = bandle
+            val bandle = Bundle()//bandle هو عبارة عن حاوية لارسال البيانات
+            bandle.putString("data", input)
 
-                   activity?.supportFragmentManager?.beginTransaction()
+            val infoFragment = InfoFragment()
+            infoFragment.arguments = bandle
+            fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, infoFragment)
+                ?.commit()
 
-                       ?.replace(R.id.fragment_container,fragment)
-                       ?.addToBackStack("details")
-                       ?.commit()//commitNow*/
 
-            }
 
-            return view
         }
 
+
+
+
+        //3. Alert dialog
+        clear= view.findViewById(R.id.clear)
+        clear.setOnClickListener {
+            val alert = AlertDialog.Builder(context)
+            alert.setTitle("Reset")
+            alert.setIcon(R.drawable.alert)
+            alert.setMessage("Are you sure you want to clear all entries?")
+            alert.setPositiveButton(R.string.yes) { dialog, which ->
+                pickDate.setText(null)
+                phone.setText(null)
+                showInfo.setText(null)
+                gender.setText(null)
+                name.setText(null)
+                ccp.resetToDefaultCountry()
+            }
+            alert.setNegativeButton(R.string.no) { dialog, which ->
+                dialog.cancel()
+            }
+            alert.setNeutralButton(R.string.cancel) { dialog, which ->
+                dialog.cancel()
+            }
+            alert.show()
+        }
+
+        return view
+    }
+
 /*  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-  super.onViewCreated(view, savedInstanceState)
+super.onViewCreated(view, savedInstanceState)
 
 
 
 }*/
 
 
-    }
+}
 
