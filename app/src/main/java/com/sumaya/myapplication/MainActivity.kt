@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pickDate : TextView
 
     //2. Country Code
-    private lateinit var ccp: CountryCodePicker
+   /* private lateinit var ccp: CountryCodePicker
     private var countryCode:String? = null
     private var countryName:String? = null
     private lateinit var showInfo : TextView
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var send: Button
     private lateinit var clear : Button
-    private lateinit var date :String
+    private lateinit var date :String*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,9 +40,9 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, MainFragment.newInstance())
                 .commitNow()*/
-     /*
+
         // 1. Date Dialog
-        pickDate= findViewById(R.id.pickDate)
+      /*  pickDate= findViewById(R.id.pickDate)
 
         //create object of Calendar
         val calendar = Calendar.getInstance()
@@ -120,8 +120,8 @@ class MainActivity : AppCompatActivity() {
                 dialog.cancel()
             }.show()
 
-        }
+        }*/
 
-*/
+
     }
 }
