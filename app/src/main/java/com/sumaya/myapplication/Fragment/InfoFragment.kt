@@ -9,12 +9,13 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.sumaya.myapplication.Data_Info
 import com.sumaya.myapplication.R
+import kotlinx.android.synthetic.main.fragment_main.*
 
 
 class InfoFragment : Fragment() {
 
     companion object {
-       // fun newInstance() = Details()
+       fun newInstance() = InfoFragment()
     }
     private lateinit var showInfo:TextView
 
@@ -30,27 +31,34 @@ class InfoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_info, container, false)
+        val view =inflater.inflate(R.layout.fragment_info, container, false)
+
+        val textViewName:TextView=view.findViewById(R.id.textview_info)
+        val args = this.arguments
+        val inputData = args?.get("data")
+        textViewName.text =inputData.toString()
+
+        return view
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (arguments!=null){
+  /*    if (arguments!=null){
 
 
-            requireArguments().getParcelable<Data_Info>("KD").let {
+
 
                 showInfo=view.findViewById(R.id.textview_info)
 
 
-               showInfo.text= "name : ${it?.name}"
+               showInfo.text= "name : ${id_name.text}"
 
             }
 
-
+*/
         }
     }
 
 
-    }

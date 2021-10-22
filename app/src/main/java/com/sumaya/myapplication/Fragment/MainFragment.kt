@@ -29,48 +29,53 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        val view =inflater.inflate(R.layout.fragment_main, container, false)
+
+
+        val btnSend:Button = view.findViewById(R.id.send)
+
+        btnSend.setOnClickListener {
+
+            val name:EditText = view.findViewById(R.id.id_name)
+
+            val input = name.text.toString()
+
+            val bandle =Bundle()//bandle هو عبارة عن حاوية لارسال البيانات
+            bandle.putString("data",input)
+            // Toast.makeText(context , " ${name.text}", Toast.LENGTH_SHORT).show()
+
+            val infoFragment =InfoFragment()
+            infoFragment.arguments =bandle
+            fragmentManager?.beginTransaction()?.replace(R.id.fragment_container,infoFragment)?.commit()
+
+
+            /*activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragment_container,infoFragment)
+                ?.addToBackStack("details")
+                ?.commit()//commitNow*/
+
+            //هنا يتحقق اذا كان الجوال بالعرض يعرض البيانات في الفريم (نفس الصفحه) و اذا  كان الجوال بالطول يروح فارقمينت ثانيه
+            /*     val view = R.id.container
+                   val bandle =Bundle()
+                   val fragment = InfoFragment.newInstance()
+
+                   fragment.arguments  = bandle
+
+                   activity?.supportFragmentManager?.beginTransaction()
+
+                       ?.replace(R.id.fragment_container,fragment)
+                       ?.addToBackStack("details")
+                       ?.commit()//commitNow*/
+
+        }
+
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val btnSend:Button = view.findViewById(R.id.send)
-        val name:EditText = view.findViewById(R.id.id_name)
-
-        btnSend.setOnClickListener {
-            val input = name.text.toString()
-
-
-
-
-            val bandle =Bundle()//bandle هو عبارة عن حاوية لارسال البيانات
-            bandle.putString("KD",input)
-            //ممكن eeror
-            val infoFragment =InfoFragment()
-            infoFragment.arguments =bandle
-            Toast.makeText(context , " ${name.text}", Toast.LENGTH_SHORT).show()
-
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragment_container,infoFragment)
-                ?.addToBackStack("details")
-                ?.commit()//commitNow
-
-
-            //هنا يتحقق اذا كان الجوال بالعرض يعرض البيانات في الفريم (نفس الصفحه) و اذا  كان الجوال بالطول يروح فارقمينت ثانيه
-         /*   val view = R.id.container
-            val fragment = InfoFragment.newInstance()
-
-            fragment.arguments  = bandle
-
-            activity?.supportFragmentManager?.beginTransaction()
-
-                ?.replace(R.id.fragment_container,fragment)
-                ?.addToBackStack("details")
-                ?.commit()//commitNow*/
-
-        }
 
     }
 
