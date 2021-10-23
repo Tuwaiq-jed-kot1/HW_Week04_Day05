@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.hbb20.CountryCodePicker
 import java.util.*
 
+
 class MainActivity : AppCompatActivity() {
     //1. Date
     private lateinit var pickDate : TextView
@@ -86,5 +87,10 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+        val mainFragment = MainFragment()
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.frameFragemt, mainFragment)
+            commit()
+        }
     }
 }
