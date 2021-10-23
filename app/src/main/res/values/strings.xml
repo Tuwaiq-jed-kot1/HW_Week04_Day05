@@ -3,4 +3,14 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="cancel">cancel</string>
+    <string-array name="genderArr">
+        <item>female</item>
+        <item>male</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="brithday">Brithday:</string>
+    <string name="phone_number">phone number</string>
+    <string name="send">Send</string>
+    <string name="clear">Clear</string>
 </resources>
