@@ -4,9 +4,7 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import com.hbb20.CountryCodePicker
 import java.util.*
 
@@ -61,30 +59,34 @@ class MainActivity : AppCompatActivity() {
             var info = "Birthday: $date\n"
             info += "Phone: +${countryCode.toString()+ phone.text}\n"
             showInfo.setText(info)
+            if (savedInstanceState == null) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, MainFragment.newInstance())
+                    .commitNow()
+            }
+
+            //3. Alert dialog
+            clear= findViewById(R.id.clear)
+            clear.setOnClickListener {
+                val alert = AlertDialog.Builder(this)
+                alert.setTitle("Reset")
+                alert.setIcon(R.drawable.alert)
+                alert.setMessage("Are you sure you want to clear all entries?")
+                alert.setPositiveButton(R.string.yes) { dialog, which ->
+                    pickDate.setText(null)
+                    phone.setText(null)
+                    showInfo.setText(null)
+                    ccp.resetToDefaultCountry()
+                }
+                alert.setNegativeButton(R.string.no) { dialog, which ->
+                    dialog.cancel()
+                }
+                alert.setNeutralButton(R.string.cancel) { dialog, which ->
+                    dialog.cancel()
+                }
+                alert.show()
+            }
+
+
         }
-
-        //3. Alert dialog
-        clear= findViewById(R.id.clear)
-        clear.setOnClickListener {
-            val alert = AlertDialog.Builder(this)
-            alert.setTitle("Reset")
-            alert.setIcon(R.drawable.alert)
-            alert.setMessage("Are you sure you want to clear all entries?")
-            alert.setPositiveButton(R.string.yes) { dialog, which ->
-                pickDate.setText(null)
-                phone.setText(null)
-                showInfo.setText(null)
-                ccp.resetToDefaultCountry()
-            }
-            alert.setNegativeButton(R.string.no) { dialog, which ->
-                dialog.cancel()
-            }
-            alert.setNeutralButton(R.string.cancel) { dialog, which ->
-                dialog.cancel()
-            }
-            alert.show()
-        }
-
-
-    }
-}
+    }}
