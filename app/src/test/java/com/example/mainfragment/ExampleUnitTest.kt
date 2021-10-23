@@ -1,4 +1,4 @@
-package com.sumaya.myapplication
+package com.example.mainfragment
 
 import org.junit.Test
 
