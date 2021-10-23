@@ -57,7 +57,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gender"
+            android:text="Gender: "
             android:textSize="20dp"
             android:paddingRight="10dp"/>
         <TextView
@@ -106,15 +106,6 @@
     </LinearLayout>
 
 
-    <TextView
-        android:background="@color/lightBlue"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:id="@+id/info"
-        android:textSize="20dp"
-        android:hint="show info"
-        android:lines="7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+
 
 </LinearLayout>

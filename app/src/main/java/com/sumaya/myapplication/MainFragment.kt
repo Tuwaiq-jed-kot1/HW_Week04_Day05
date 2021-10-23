@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.hbb20.CountryCodePicker
 import java.util.*
@@ -42,7 +43,6 @@ class MainFragment : Fragment() {
     private lateinit var ccp: CountryCodePicker
     private var countryCode:String? = null
     private var countryName:String? = null
-    private lateinit var showInfo : TextView
     private lateinit var phone: EditText
 
     private lateinit var send: Button
@@ -87,10 +87,10 @@ class MainFragment : Fragment() {
                 dialogInterface.cancel()
             })
             genderAlert.show()
+            chooseGender.text = selectedGender
         }
 
         //2. Country Code
-        showInfo = view.findViewById(R.id.info)
         phone = view.findViewById(R.id.phone)
         ccp = view.findViewById(R.id.pickCode)
         ccp.setOnCountryChangeListener {
@@ -101,15 +101,23 @@ class MainFragment : Fragment() {
         //show Info
         send = view.findViewById(R.id.send)
         send.setOnClickListener {
-            var info = "Birthday: $date\n"
+            var info = "User Information:\n\nBirthday: $date\n"
+            info += "Gender: $selectedGender\n"
             info += "Phone: +${countryCode.toString()+ phone.text}\n"
-            showInfo.setText(info)
 
-            InfoFragment
+            val bundleInfo = Bundle()
+            bundleInfo.putString("Info", info)
+
+            val fragment = InfoFragment.newInstance()
+            fragment.arguments = bundleInfo
+
             val mainActivity = view.context as AppCompatActivity
+
             mainActivity.supportFragmentManager.beginTransaction()
-                .replace(R.id.container, InfoFragment())
+                .replace(R.id.container, fragment)
+                .addToBackStack("back")
                 .commit()
+
         }
 
         //3. Alert dialog
@@ -122,7 +130,6 @@ class MainFragment : Fragment() {
             alert.setPositiveButton(R.string.yes) { dialog, which ->
                 pickDate.setText(null)
                 phone.setText(null)
-                showInfo.setText(null)
                 ccp.resetToDefaultCountry()
             }
             alert.setNegativeButton(R.string.no) { dialog, which ->
