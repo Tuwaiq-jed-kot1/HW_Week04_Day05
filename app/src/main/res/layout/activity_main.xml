@@ -41,13 +41,15 @@
         android:textSize="20dp"
         android:text="Brithday:"
         android:paddingRight="10dp"  />
+
         <TextView
-            android:textSize="20dp"
-            android:hint="DD/MM/YYYY"
-            android:inputType="date"
             android:id="@+id/pickDate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:hint="DD/MM/YYYY"
+            android:inputType="date"
+            android:textSize="20dp"
+            tools:ignore="TouchTargetSizeCheck" />
     </LinearLayout>
     <LinearLayout
         android:layout_marginLeft="30dp"
@@ -67,6 +69,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="Gender: "
+        android:textSize="20dp">
+
+    </TextView>
+
+    <Spinner
+        android:id="@+id/tvGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:paddingStart="60dp"
+        android:paddingTop="50sp"
+        tools:ignore="RtlSymmetry">
+
+
+    </Spinner>
+
     <LinearLayout
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
@@ -86,16 +112,5 @@
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
-
-    <TextView
-        android:background="@color/lightBlue"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:id="@+id/info"
-        android:textSize="20dp"
-        android:hint="show info"
-        android:lines="7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>
