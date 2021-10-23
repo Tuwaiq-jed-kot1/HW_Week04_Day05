@@ -1,15 +1,11 @@
 package com.sumaya.myapplication
 
-import android.app.AlertDialog
-import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.*
-import com.hbb20.CountryCodePicker
-import java.util.*
+import com.sumaya.myapplication.fragments.MainFragment
 
 class MainActivity : AppCompatActivity() {
+/*
     //0. Name
     private lateinit var name: EditText
 
@@ -24,18 +20,25 @@ class MainActivity : AppCompatActivity() {
     private lateinit var phone: EditText
 
     //3. Gender Spinner
-    private lateinit var spinner1_gender: Spinner
+    private lateinit var spinner1gender: Spinner
     private val gender: Array<String> = arrayOf("Male", "Female", "I'd rather not say")
     private var genderSelected: String = ""
 
     private lateinit var send: Button
     private lateinit var clear : Button
     private lateinit var date :String
+*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val fragmentMain = MainFragment()
+
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().replace(R.id.container, MainFragment.newInstance()).commitNow()
+        }
+/*
         //0. Name Edit Text
         name = findViewById(R.id.editText_Name)
 
@@ -66,10 +69,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         //3. Gender Spinner
-        spinner1_gender = findViewById(R.id.spinner1_gender)
+        spinner1gender = findViewById(R.id.spinner1_gender)
         val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, gender)
-        spinner1_gender.adapter = arrayAdapter
-        spinner1_gender.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
+        spinner1gender.adapter = arrayAdapter
+        spinner1gender.onItemSelectedListener = object: AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
                 parent: AdapterView<*>?,
                 view: View?,
@@ -111,7 +114,7 @@ class MainActivity : AppCompatActivity() {
                 showInfo.setText(null)
                 ccp.resetToDefaultCountry()
                 //arrayAdapter.set
-                //spinner1_gender.resetPivot()
+                //spinner1gender.resetPivot()
             }
             alert.setNegativeButton(R.string.no) { dialog, which ->
                 dialog.cancel()
@@ -121,7 +124,7 @@ class MainActivity : AppCompatActivity() {
             }
             alert.show()
         }
-
+*/
 
     }
 }
