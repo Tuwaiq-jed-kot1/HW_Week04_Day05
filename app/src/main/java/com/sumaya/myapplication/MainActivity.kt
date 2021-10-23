@@ -4,13 +4,17 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.view.View
+import android.widget.*
 import com.hbb20.CountryCodePicker
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+
+    var Gender = arrayOf("Male", "Female")
+    private lateinit var spinner: Spinner
+    private lateinit var textView_massage:TextView
+
     //1. Date
     private lateinit var pickDate : TextView
 
@@ -25,9 +29,26 @@ class MainActivity : AppCompatActivity() {
     private lateinit var clear : Button
     private lateinit var date :String
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        textView_massage = findViewById(R.id.massage)
+
+
+        spinner = findViewById(R.id.spinner_sample)
+        spinner.onItemSelectedListener = this
+
+
+        // Create an ArrayAdapter using a simple spinner layout and languages array
+        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, Gender)
+        // Set layout to use when the list of choices appear
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        // Set Adapter to Spinner
+        spinner.adapter = arrayAdapter
+
 
         // 1. Date Dialog
         pickDate= findViewById(R.id.pickDate)
@@ -85,6 +106,14 @@ class MainActivity : AppCompatActivity() {
             alert.show()
         }
 
+
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        textView_massage.text = "Gender : "+Gender[position]
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
 
     }
 }
