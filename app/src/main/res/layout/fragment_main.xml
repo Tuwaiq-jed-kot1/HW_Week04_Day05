@@ -8,13 +8,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.MainFragment"
     android:orientation="vertical">
+
     <TextView
-        android:textSize="60dp"
-        android:gravity="center"
-        android:text="Register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="40dp"/>
+        android:layout_margin="40dp"
+        android:gravity="center"
+        android:text="Register"
+        android:textSize="60dp" />
+
     <LinearLayout
         android:layout_margin="30dp"
         android:layout_width="match_parent"
@@ -44,13 +46,15 @@
             android:textSize="20dp"
             android:text="Brithday:"
             android:paddingRight="10dp"  />
+
         <TextView
-            android:textSize="20dp"
-            android:hint="DD/MM/YYYY"
-            android:inputType="date"
             android:id="@+id/pickDate"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:hint="DD/MM/YYYY"
+            android:inputType="date"
+            android:textSize="20dp"
+            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
     </LinearLayout>
     <LinearLayout
         android:layout_marginLeft="30dp"

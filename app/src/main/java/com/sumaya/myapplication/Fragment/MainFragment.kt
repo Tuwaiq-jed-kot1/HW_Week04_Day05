@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.fragment.app.DialogFragment
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
@@ -61,16 +60,15 @@ class MainFragment : Fragment() {
         val day = calendar.get(Calendar.DAY_OF_MONTH)
         val month = calendar.get(Calendar.MONTH)
         val year = calendar.get(Calendar.YEAR)
+
         pickDate.setOnClickListener {
-            DatePickerDialog(this.requireContext(), DatePickerDialog.OnDateSetListener { _, y, m, d ->
+            DatePickerDialog(view.context, DatePickerDialog.OnDateSetListener { _, y, m, d ->
+
                 date = "$d/$m/$y"
                 pickDate.setText(date)
-            }, year, month, day)
+                     }, year, month, day)
                 .show()
         }
-
-
-
 
         //2. Country Code
         showInfo =view.findViewById(R.id.info)
@@ -82,33 +80,36 @@ class MainFragment : Fragment() {
         }
 
         gender = view.findViewById(R.id.id_gender)
+        val listGender = arrayOf("Male", "Female")
+
+        var selectGender = AlertDialog.Builder(view.context)
         gender.setOnClickListener {
-            val alert_gender = AlertDialog.Builder(context)
-            alert_gender.setTitle("Gender")
+            selectGender.setTitle("Please choose your gender :")
 
-            alert_gender.setMessage("Please choose your gender")
+            selectGender.setSingleChoiceItems(listGender, -1) { dialogInterface, _gender ->
 
-            alert_gender.setPositiveButton("Male") { dialog, which ->
-                gender.setText("Male")
+                gender.text= listGender[_gender]
             }
+            selectGender.setPositiveButton("OK") { dialog, which ->
 
-            alert_gender.setNegativeButton("Fmale") { dialog, which ->
-                gender.setText("Fmale")
+                dialog.dismiss()
             }
-
-            alert_gender.setNeutralButton(R.string.cancel) { dialog, which ->
+            selectGender.setNeutralButton("Cancel") { dialog, which ->
+                gender.text=null
                 dialog.cancel()
-            }.show()
-        }
+            }
 
+            val mDialog = selectGender.create()
+            mDialog.show()
+        }
 
         val btnSend: Button = view.findViewById(R.id.send)
 
         btnSend.setOnClickListener {
-            if (name!=null && date!=null && gender.text.isNotEmpty() && phone.text.isNotEmpty()){
+            if (name!=null  &&pickDate.text.isNotEmpty() && gender.text.isNotEmpty() && phone.text.isNotEmpty()){
 
                 val input = "Name: ${name.text.toString()} \n BirthDay :${date} \n Gender: ${gender.text.toString()}" +
-                        "\n ${showInfo.text.toString()} \n Phone:${countryCode.toString()+ phone.text}"
+                        "\n Phone:${countryCode.toString()+ phone.text}"
 
                 val bandle = Bundle()//bandle هو عبارة عن حاوية لارسال البيانات
                 bandle.putString("data", input)
@@ -116,6 +117,9 @@ class MainFragment : Fragment() {
                 val infoFragment = InfoFragment()
                 infoFragment.arguments = bandle
                 fragmentManager?.beginTransaction()?.replace(R.id.fragment_container, infoFragment)
+                    ?.addToBackStack("details")
+
+
                     ?.commit()
             }else{
 
@@ -156,14 +160,6 @@ class MainFragment : Fragment() {
 
         return view
     }
-
-/*  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-super.onViewCreated(view, savedInstanceState)
-
-
-
-}*/
-
 
 }
 

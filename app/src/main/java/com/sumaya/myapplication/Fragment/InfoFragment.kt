@@ -6,10 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
-import com.sumaya.myapplication.Data_Info
 import com.sumaya.myapplication.R
-import kotlinx.android.synthetic.main.fragment_main.*
 
 
 class InfoFragment : Fragment() {
