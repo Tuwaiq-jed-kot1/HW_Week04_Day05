@@ -4,10 +4,14 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.view.View
+import android.widget.*
+import androidx.fragment.app.Fragment
 import com.hbb20.CountryCodePicker
+import com.sumaya.myapplication.fragmant.InfoFragment
+import com.sumaya.myapplication.fragmant.MainFragment
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -24,10 +28,32 @@ class MainActivity : AppCompatActivity() {
     private lateinit var send: Button
     private lateinit var clear : Button
     private lateinit var date :String
+    //3. Gender
+    var gendar: Array<String> = arrayOf("Male", "Female")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val arrayAdapter= ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item,gendar)
+        spinner.adapter = arrayAdapter
+        spinner.onItemSelectedListener = object :AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                print(gendar)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+        }
+
+
 
         // 1. Date Dialog
         pickDate= findViewById(R.id.pickDate)
@@ -86,5 +112,11 @@ class MainActivity : AppCompatActivity() {
         }
 
 
+
+
+    val mainFragment = MainFragment()
+    supportFragmentManager.beginTransaction().apply {
+        replace(R.id.frameFragemt, mainFragment)
+        commit()
     }
-}
+}}
