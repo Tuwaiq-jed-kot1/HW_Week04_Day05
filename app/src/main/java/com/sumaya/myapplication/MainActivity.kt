@@ -4,33 +4,43 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.view.View
+import android.widget.*
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.hbb20.CountryCodePicker
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    //1. Date
-    private lateinit var pickDate : TextView
 
-    //2. Country Code
+    private lateinit var pickDate: TextView
     private lateinit var ccp: CountryCodePicker
-    private var countryCode:String? = null
-    private var countryName:String? = null
-    private lateinit var showInfo : TextView
+    private var countryCode: String? = null
+    private var countryName: String? = null
+    private lateinit var showInfo: TextView
     private lateinit var phone: EditText
+    private lateinit var nameEdit: EditText
 
     private lateinit var send: Button
-    private lateinit var clear : Button
-    private lateinit var date :String
+    private lateinit var clear: Button
+    private var date: String = ""
+    private lateinit var pickGenderText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.container, showFragment.newInstance())
+                .commitNow()
+        }
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // 1. Date Dialog
-        pickDate= findViewById(R.id.pickDate)
+        pickDate = view.findViewById(R.id.pickDate)
 
         //create object of Calendar
         val calendar = Calendar.getInstance()
@@ -39,52 +49,89 @@ class MainActivity : AppCompatActivity() {
         val month = calendar.get(Calendar.MONTH)
         val year = calendar.get(Calendar.YEAR)
         pickDate.setOnClickListener {
-            DatePickerDialog(this, DatePickerDialog.OnDateSetListener{ _, y,m,d ->
+            DatePickerDialog(view.context, { _, y, m, d ->
                 date = "$d/$m/$y"
-                pickDate.setText(date)
-            },year,month, day)
+                pickDate.text = date
+            }, year, month, day)
                 .show()
         }
 
         //2. Country Code
-        showInfo = findViewById(R.id.info)
-        phone = findViewById(R.id.phone)
-        ccp = findViewById(R.id.pickCode)
+        showInfo = view.findViewById(R.id.info)
+        phone = view.findViewById(R.id.phone)
+        ccp = view.findViewById(R.id.pickCode)
         ccp.setOnCountryChangeListener {
             countryCode = ccp.selectedCountryCode
             countryName = ccp.selectedCountryName
         }
 
         //show Info
-        send = findViewById(R.id.send)
+        send = view.findViewById(R.id.send)
         send.setOnClickListener {
             var info = "Birthday: $date\n"
-            info += "Phone: +${countryCode.toString()+ phone.text}\n"
-            showInfo.setText(info)
+            info += "Phone: +${countryCode.toString() + phone.text}\n"
+            showInfo.text = info
+
+            val bundleInfo = Bundle()
+            bundleInfo.putString("date", date)
+            bundleInfo.putString("gender", pickGenderText.text.toString())
+            bundleInfo.putString("phone", countryCode.toString() + phone.text)
+
+            val fragment = showInfo.newInstance()
+            fragment.arguments = bundleInfo
+            val activity = view.context as AppCompatActivity
+            activity.supportFragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .addToBackStack("details")
+                .commit()
         }
 
         //3. Alert dialog
-        clear= findViewById(R.id.clear)
+        clear = view.findViewById(R.id.clear)
         clear.setOnClickListener {
-            val alert = AlertDialog.Builder(this)
+            val alert = AlertDialog.Builder(view.context)
             alert.setTitle("Reset")
             alert.setIcon(R.drawable.alert)
             alert.setMessage("Are you sure you want to clear all entries?")
-            alert.setPositiveButton(R.string.yes) { dialog, which ->
-                pickDate.setText(null)
-                phone.setText(null)
-                showInfo.setText(null)
+            alert.setPositiveButton(R.string.yes) { _, _ ->
+                pickDate.text = null
+                phone.text = null
+                showInfo.text = null
+                pickGenderText.text = null
                 ccp.resetToDefaultCountry()
             }
-            alert.setNegativeButton(R.string.no) { dialog, which ->
+            alert.setNegativeButton(R.string.no) { dialog, _ ->
                 dialog.cancel()
             }
-            alert.setNeutralButton(R.string.cancel) { dialog, which ->
+            alert.setNeutralButton(R.string.cancel) { dialog, _ ->
                 dialog.cancel()
             }
             alert.show()
         }
-
+          //Gender
+        pickGenderText = view.findViewById(R.id.tvGender)
+        var genderIndex: Int? = null
+        val genderArray = arrayOf("Male", "Female")
+        pickGenderText.setOnClickListener {
+            val genderDialog = MaterialAlertDialogBuilder(view.context).apply {
+                setTitle("Select your gender : ")
+                setNeutralButton("Cancel") { _, _ ->
+                    genderIndex = null
+                    pickGenderText.text = genderIndex
+                }
+                setPositiveButton("Ok") { _, _ ->
+                    pickGenderText.text = genderIndex?.let { genderArray[it] }
+                }
+                setSingleChoiceItems(genderArray, -1) { _, which ->
+                    genderIndex = which
+                }
+            }
+            genderDialog.show()
+        }
 
     }
+
+}
+
+
 }
