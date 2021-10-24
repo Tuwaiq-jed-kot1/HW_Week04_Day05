@@ -9,20 +9,18 @@ import android.widget.TextView
 
 
 class InfoFragment : Fragment() {
-    private lateinit var TextView: TextView
-
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view= inflater.inflate(R.layout.fragment_info,container,false)
-       TextView=view.findViewById(R.id.showInfo)
-        val arg=this.arguments
-        val inputData=arg?.get("data")
-        TextView.text=inputData.toString()
-        return view
+     val view= inflater.inflate(R.layout.fragment_info, container, false)
+        val Showinfo:TextView=view.findViewById(R.id.showInfo)
+        val args =this.arguments
+        val inputData=args?.get("phone")
+        Showinfo.text=inputData.toString()
 
 
+      return view
     }
+
 }

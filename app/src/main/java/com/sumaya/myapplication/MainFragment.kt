@@ -3,7 +3,9 @@ package com.sumaya.myapplication
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
+
 import android.os.Bundle
+
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,17 +13,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
+
 import com.hbb20.CountryCodePicker
 
 
 
 class MainFragment : Fragment() {
-    private lateinit var pickDate: TextView
-    private lateinit var ccp: CountryCodePicker
     private var countryCode: String? = null
     private var countryName: String? = null
-    private lateinit var showInfo: TextView
+    private lateinit var pickDate: TextView
+    private lateinit var ccp: CountryCodePicker
+
     private lateinit var phone: EditText
     private lateinit var gender: TextView
     private lateinit var send: Button
@@ -54,7 +56,7 @@ class MainFragment : Fragment() {
 
                 gender.setText(selectedGender)
             }
-            alert.setNeutralButton(R.string.cancel) { dialog, which ->
+            alert.setNeutralButton(R.string.cancel) { dialog, _ ->
                 dialog.cancel()
                 gender.setText("---")
             }
@@ -72,7 +74,7 @@ class MainFragment : Fragment() {
         }
 
         //2. Country Code
-        showInfo = view.findViewById(R.id.info)
+       // showInfo = view.findViewById(R.id.info)
         phone = view.findViewById(R.id.phone)
         ccp = view.findViewById(R.id.pickCode)
         ccp.setOnCountryChangeListener {
@@ -81,23 +83,25 @@ class MainFragment : Fragment() {
         }
 
         name = view.findViewById(R.id.txtName)
-        send.setOnClickListener {
-            val activity = view.context as AppCompatActivity
+        send = view.findViewById(R.id.send)
+    send.setOnClickListener{
 
-            var info = "Name: ${name.text}\n"
-            info += "Gender: ${gender.text}\n"
-            info += "Birthday: $date\n"
-            info += "Phone: +${countryCode.toString() + phone.text}\n"
 
-            showInfo.setText(info)
-            val input = showInfo.text.toString()
-            val bundle = Bundle()
-            bundle.putString("data", input)
-            val fragment = InfoFragment()
-            fragment.arguments = bundle
-            activity.supportFragmentManager.beginTransaction().replace(R.id.nav_container, fragment).commit()
+val phone:EditText=phone.findViewById(R.id.phone)
+        val input=phone.text.toString()
 
-        }
+        val bundle=Bundle()
+        bundle.putString("phone",input)
+        val fragment=InfoFragment()
+        fragment.arguments=bundle
+
+        this.fragmentManager?.beginTransaction()?.replace(R.id.nav_container,fragment)?.commit()
+
+
+
+
+    }
+
 
         //3. Alert dialog
         clear = view.findViewById(R.id.clear)
@@ -106,16 +110,17 @@ class MainFragment : Fragment() {
             alert.setTitle("Reset")
             alert.setIcon(R.drawable.alert)
             alert.setMessage("Are you sure you want to clear all entries?")
-            alert.setPositiveButton(R.string.yes) { dialog, which ->
+            alert.setPositiveButton(R.string.yes) { _, _ ->
                 pickDate.setText(null)
                 phone.setText(null)
-                showInfo.setText(null)
+                gender.setText(null)
+                name.setText(null)
                 ccp.resetToDefaultCountry()
             }
-            alert.setNegativeButton(R.string.no) { dialog, which ->
+            alert.setNegativeButton(R.string.no) { dialog, _ ->
                 dialog.cancel()
             }
-            alert.setNeutralButton(R.string.cancel) { dialog, which ->
+            alert.setNeutralButton(R.string.cancel) { dialog, _ ->
                 dialog.cancel()
             }
             alert.show()
