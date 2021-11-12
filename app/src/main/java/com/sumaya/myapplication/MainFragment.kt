@@ -115,6 +115,7 @@ class MainFragment : Fragment() {
             alert.show()
         }
 
+
         //show Info
         send = view.findViewById(R.id.send)
         send.setOnClickListener {
