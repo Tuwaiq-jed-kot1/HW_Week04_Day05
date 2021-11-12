@@ -3,4 +3,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="cancel">cancel</string>
+    <string-array name="genderArray">
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
 </resources>
